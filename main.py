@@ -1,6 +1,7 @@
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from datetime import datetime
 
+import pandas
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 
@@ -22,8 +23,13 @@ def get_year_word(value):
         return single_year_word_forms[value % 10]
     else:
         return 'лет'
+        
+wine_df = pandas.read_excel('wine.xlsx')
+wine_df.columns = ['title', 'sort', 'price', 'image']
+wine_cards = wine_df.to_dict(orient='records')
 
 rendered_page = template.render(
+    wine_cards = wine_cards,
     existence_time=f'Уже {years_existing} {get_year_word(years_existing)} с вами'
 )
 
