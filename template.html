@@ -112,23 +112,30 @@
             <p>Вино — один из самых благородных и многогранных напитков в мире! Виноделие берёт своё начало с незапамятных времён. Вино упоминается в Библии и Коране, греческой и римской мифологии, где были свои боги вина (к примеру, Дионис). Стоит отметить, что почти у каждого народа существует своя легенда, повествующая о появлении божественного эликсира — вина.
             </p>
           </div>
-        </div> 
-        <div class="row">
-          {% for card in wine_cards %}
-            <div class="col-lg-4 mb-5 col-md-6">
-              <div class="wine_v_1 text-center pb-4 pt-5">
-                <img src="images/{{card.image}}" alt="Image" class="img-fluid">
-                <div>
-                  <h3 class="heading mt-3 mb-3 text-dark">{{card.title}}</h3>
-                  <p>
-                    Сорт винограда - {{card.sort}}<br/>
-                    <span class="price">{{card.price}} р.</span>
-                  </p>
+        </div>
+        {% for category in drink_cards %}
+          <div class="col-12 section-title text-center mb-5">
+            <h2 class="d-block">{{category}}</h2>
+          </div>
+          <div class="row">
+            {% for card in drink_cards[category] %}
+              <div class="col-lg-4 mb-5 col-md-6">
+                <div class="wine_v_1 text-center pb-4 pt-5">
+                  <img src="images/{{card.image}}" alt="Image" class="img-fluid">
+                  <div>
+                    <h3 class="heading mt-3 mb-3 text-dark">{{card.title}}</h3>
+                    <p>
+                      {% if card.sort %}
+                        Сорт винограда - {{card.sort}}<br/>
+                      {% endif %}
+                      <span class="price">{{card.price}} р.</span>
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          {% endfor %}
-        </div>
+            {% endfor %}
+          </div>
+        {% endfor %}
       </div>
     </div>
 
