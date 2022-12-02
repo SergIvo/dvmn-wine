@@ -13,9 +13,18 @@ template = env.get_template('template.html')
 
 foundation_year = 1920
 current_year = int(datetime.strftime(datetime.now(), '%Y'))
+years_existing = current_year - foundation_year
+
+def get_year_word(value):
+    single_year_word_forms = {1: 'год', 2: 'года', 3: 'года', 4: 'года'}
+    is_tenth_years = (value // 10) == 1
+    if not is_tenth_years and value % 10 in single_year_word_forms:
+        return single_year_word_forms[value % 10]
+    else:
+        return 'лет'
 
 rendered_page = template.render(
-    existence_time=f'Уже {current_year - foundation_year} лет с вами'
+    existence_time=f'Уже {years_existing} {get_year_word(years_existing)} с вами'
 )
 
 with open('index.html', 'w', encoding="utf8") as file:
