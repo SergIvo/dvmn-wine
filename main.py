@@ -25,8 +25,8 @@ def get_year_word(value):
     else:
         return 'лет'
         
-drink_df = pandas.read_excel('wine2.xlsx')
-drink_df.columns = ['category', 'title', 'sort', 'price', 'image']
+drink_df = pandas.read_excel('wine3.xlsx')
+drink_df.columns = ['category', 'title', 'sort', 'price', 'image', 'profitable']
 drink_df.fillna('', inplace=True)
 drink_cards = drink_df.to_dict(orient='records')
 
