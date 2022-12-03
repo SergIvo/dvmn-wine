@@ -4,3 +4,4 @@ venv/
 index.html
 *.xlsx
 *xls
+.replit
