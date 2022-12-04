@@ -16,7 +16,7 @@ def get_year_word(value):
         return 'лет'
 
 
-def get_data_from_file():
+def read_from_file():
     environment_vars = Env()
     environment_vars.read_env()
     file_path = environment_vars('WINE_FILE', default='wine.xlsx')
@@ -44,7 +44,7 @@ def main():
     current_year = datetime.now().year
     winery_age = current_year - foundation_year
 
-    grouped_drink_cards = get_data_from_file()
+    grouped_drink_cards = read_from_file()
 
     rendered_page = template.render(
         drink_cards = grouped_drink_cards,
