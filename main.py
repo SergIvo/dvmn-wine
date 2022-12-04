@@ -16,11 +16,7 @@ def get_year_word(value):
         return 'лет'
 
 
-def read_from_file():
-    environment_vars = Env()
-    environment_vars.read_env()
-    file_path = environment_vars('WINE_FILE', default='wine.xlsx')
-    
+def read_from_file(file_path):
     drink_df = pandas.read_excel(file_path)
     drink_df.columns = ['category', 'title', 'sort', 'price', 'image', 'profitable']
     drink_df.fillna('', inplace=True)
@@ -33,6 +29,10 @@ def read_from_file():
 
 
 def main():
+    environment_vars = Env()
+    environment_vars.read_env()
+    excel_file_path = environment_vars('WINE_FILE', default='wine.xlsx')
+    
     env = Environment(
         loader=FileSystemLoader('.'),
         autoescape=select_autoescape(['html', 'xml'])
@@ -44,7 +44,7 @@ def main():
     current_year = datetime.now().year
     winery_age = current_year - foundation_year
 
-    grouped_drink_cards = read_from_file()
+    grouped_drink_cards = read_from_file(excel_file_path)
 
     rendered_page = template.render(
         drink_cards = grouped_drink_cards,
