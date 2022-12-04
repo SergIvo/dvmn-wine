@@ -25,7 +25,7 @@ def main():
 
     foundation_year = 1920
     current_year = datetime.now().year
-    years_existing = current_year - foundation_year
+    winery_age = current_year - foundation_year
         
     drink_df = pandas.read_excel('wine3.xlsx')
     drink_df.columns = ['category', 'title', 'sort', 'price', 'image', 'profitable']
@@ -38,7 +38,7 @@ def main():
 
     rendered_page = template.render(
         drink_cards = drink_cards_grouped,
-        existence_time=f'Уже {years_existing} {get_year_word(years_existing)} с вами'
+        existence_time=f'Уже {winery_age} {get_year_word(winery_age)} с вами'
     )
 
     with open('index.html', 'w', encoding="utf8") as file:
