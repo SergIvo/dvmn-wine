@@ -26,10 +26,10 @@ def get_data_from_file():
     drink_df.fillna('', inplace=True)
     drink_cards = drink_df.to_dict(orient='records')
     
-    drink_cards_grouped = defaultdict(list)
+    grouped_drink_cards = defaultdict(list)
     for card in drink_cards:
-        drink_cards_grouped[card['category']].append(card)
-    return drink_cards_grouped
+        grouped_drink_cards[card['category']].append(card)
+    return grouped_drink_cards
 
 
 def main():
@@ -44,10 +44,10 @@ def main():
     current_year = datetime.now().year
     winery_age = current_year - foundation_year
 
-    drink_cards_grouped = get_data_from_file()
+    grouped_drink_cards = get_data_from_file()
 
     rendered_page = template.render(
-        drink_cards = drink_cards_grouped,
+        drink_cards = grouped_drink_cards,
         existence_time=f'Уже {winery_age} {get_year_word(winery_age)} с вами'
     )
 
