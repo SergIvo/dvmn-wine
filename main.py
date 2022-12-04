@@ -4,6 +4,7 @@ from collections import defaultdict
 
 import pandas
 from jinja2 import Environment, FileSystemLoader, select_autoescape
+from environs import Env
 
 
 def get_year_word(value):
@@ -13,6 +14,22 @@ def get_year_word(value):
         return single_year_word_forms[value % 10]
     else:
         return 'лет'
+
+
+def get_data_from_file():
+    environment_vars = Env()
+    environment_vars.read_env()
+    file_path = environment_vars('WINE_FILE', default='wine.xlsx')
+    
+    drink_df = pandas.read_excel(file_path)
+    drink_df.columns = ['category', 'title', 'sort', 'price', 'image', 'profitable']
+    drink_df.fillna('', inplace=True)
+    drink_cards = drink_df.to_dict(orient='records')
+    
+    drink_cards_grouped = defaultdict(list)
+    for card in drink_cards:
+        drink_cards_grouped[card['category']].append(card)
+    return drink_cards_grouped
 
 
 def main():
@@ -26,15 +43,8 @@ def main():
     foundation_year = 1920
     current_year = datetime.now().year
     winery_age = current_year - foundation_year
-        
-    drink_df = pandas.read_excel('wine3.xlsx')
-    drink_df.columns = ['category', 'title', 'sort', 'price', 'image', 'profitable']
-    drink_df.fillna('', inplace=True)
-    drink_cards = drink_df.to_dict(orient='records')
 
-    drink_cards_grouped = defaultdict(list)
-    for card in drink_cards:
-        drink_cards_grouped[card['category']].append(card)
+    drink_cards_grouped = get_data_from_file()
 
     rendered_page = template.render(
         drink_cards = drink_cards_grouped,
