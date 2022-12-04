@@ -24,7 +24,7 @@ def main():
     template = env.get_template('template.html')
 
     foundation_year = 1920
-    current_year = int(datetime.strftime(datetime.now(), '%Y'))
+    current_year = datetime.now().year
     years_existing = current_year - foundation_year
         
     drink_df = pandas.read_excel('wine3.xlsx')
